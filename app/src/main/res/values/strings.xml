@@ -1,3 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Swimplan</string>
+
+    <string name="action_settings">Inställnignar</string>
+    <string name="add_exer">Lägg till övning</string>
+    <string name="update_exer">Update Exercise</string>
+    <string name="comment">Kommentar</string>
+    <string name="distance">Sträcka</string>
+    <string name="repetition">Repetitioner</string>
+    <string name="update">Uppdatera</string>
+    <string name="add">OK</string>
+    <string name="reset">Rensa</string>
+    <string name="cancel">Cancel</string>
+    <string name="share_workout">Dela simpass</string>
+    <string name="change_order">Ändra ordning</string>
+
+
 </resources>
