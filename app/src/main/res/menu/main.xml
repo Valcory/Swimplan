@@ -13,10 +13,4 @@
         android:orderInCategory="100"
         android:title="@string/share_workout"/>
 
-    <item
-        android:id="@+id/change_order"
-        android:icon="@android:drawable/ic_menu_rotate"
-        android:orderInCategory="100"
-        android:title="@string/change_order"/>
-
 </menu>

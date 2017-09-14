@@ -21,7 +21,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_EXERCISE_TABLE = "CREATE TABLE "
             + EXERCISE_TABLE + "(" + ID_COLUMN + " INTEGER PRIMARY KEY, "
-            + NAME_COLUMN + " TEXT, " + EXERCISE_DISTANCE + " DOUBLE, "
+            + NAME_COLUMN + " TEXT, " + EXERCISE_DISTANCE + " INT, "
             + EXERCISE_REPETITION + " INT, "
             + EXERCISE_SWIMMINGSTYLE_ID + " INT, "
             + "FOREIGN KEY(" + EXERCISE_SWIMMINGSTYLE_ID + ") REFERENCES "

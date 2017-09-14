@@ -6,48 +6,114 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp" >
+        android:layout_margin="5dp"
+        android:background="@color/list_item_bg">
 
-        <EditText
-            android:id="@+id/etxt_repetition"
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+
+        <RelativeLayout
+            android:id="@+id/layout_repetition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_repetition"
+                android:textColor="@color/list_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Repetitioner"/>
+
+            <NumberPicker
+                android:id="@+id/np_repetition"
+                android:textColor="@color/list_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="125dp"
+                android:scaleX="0.8"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/tv_repetition"
+                android:nextFocusDown="@+id/np_distance" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:nextFocusDown="@+id/etxt_distance"
-            android:hint="@string/repetition"
-            android:inputType="numberDecimal"
-            android:maxLines="1" />
+            android:layout_toEndOf="@id/layout_repetition" >
 
-        <EditText
-            android:id="@+id/etxt_distance"
+            <TextView
+                android:id="@+id/tv_distance"
+                android:textColor="@color/list_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Sträcka"/>
+
+            <NumberPicker
+                android:id="@+id/np_distance"
+                android:scaleX="0.8"
+                android:layout_width="wrap_content"
+                android:layout_height="125dp"
+                android:layout_alignStart="@id/tv_distance"
+                android:layout_below="@id/tv_distance"
+                android:nextFocusDown="@+id/spinner_swst" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_swimstyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etxt_repetition"
-            android:nextFocusDown="@+id/spinner_swst"
-            android:hint="@string/distance"
-            android:inputType="number|none"
-            android:maxLength="4"
-            android:maxLines="1" />
+            android:layout_toEndOf="@id/layout_distance">
 
-        <Spinner
-            android:id="@+id/spinner_swst"
+            <TextView
+                android:id="@+id/tv_swimstyle"
+                android:textColor="@color/list_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="Simsätt"/>
+
+            <Spinner
+                android:id="@+id/spinner_swst"
+                android:textColor="@color/list_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_swimstyle" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etxt_distance"/>
+            android:layout_below="@+id/layout_swimstyle"
+            android:layout_toEndOf="@id/layout_distance">
 
-        <EditText
-            android:id="@+id/etxt_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/comment"
-            android:layout_below="@+id/spinner_swst"
-            android:maxLines="1" />
+            <EditText
+                android:id="@+id/etxt_comment"
+                android:textColor="@color/list_item_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:hint="@string/comment"
+                android:textColorHint="@color/list_hint_item_text"
+                android:imeOptions="actionGo|flagNoFullscreen"
+                android:inputType="text"
+                android:maxLines="1"/>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/layout_submit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/etxt_comment"
-            android:layout_margin="5dp"
+            android:layout_below="@+id/layout_repetition"
+            android:layout_marginTop="40dp"
             android:orientation="horizontal"
             android:weightSum="2" >
 
@@ -66,9 +132,10 @@
                 android:layout_weight="1"
                 android:text="@string/reset" />
         </LinearLayout>
+
     </RelativeLayout>
 
-
+    </RelativeLayout>
 
 
 

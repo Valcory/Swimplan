@@ -7,8 +7,8 @@ public class Exercise implements Parcelable {
 
     private int id;
     private String name;
-    private double distance;
-    private double repetition;
+    private int distance;
+    private int repetition;
 
     private SwimmingStyle swimmingStyle;
 
@@ -20,8 +20,8 @@ public class Exercise implements Parcelable {
         super();
         this.id = in.readInt();
         this.name = in.readString();
-        this.distance = in.readDouble();
-        this.repetition = in.readDouble();
+        this.distance = in.readInt();
+        this.repetition = in.readInt();
 
         this.swimmingStyle = in.readParcelable(SwimmingStyle.class.getClassLoader());
     }
@@ -42,19 +42,19 @@ public class Exercise implements Parcelable {
         this.name = name;
     }
 
-    public double getDistance() {
+    public int getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(int distance) {
         this.distance = distance;
     }
 
-    public double getRepetition() {
+    public int getRepetition() {
         return repetition;
     }
 
-    public void setRepetition(double repetition) {
+    public void setRepetition(int repetition) {
         this.repetition = repetition;
     }
 
@@ -103,8 +103,8 @@ public class Exercise implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(getId());
         parcel.writeString(getName());
-        parcel.writeDouble(getDistance());
-        parcel.writeDouble(getRepetition());
+        parcel.writeInt(getDistance());
+        parcel.writeInt(getRepetition());
         parcel.writeParcelable(getSwimmingStyle(), flags);
     }
 

@@ -1,66 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
     android:background="@color/list_item_bg"
     android:descendantFocusability="blocksDescendants" >
 
     <RelativeLayout
         android:id="@+id/layout_item"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txt_exer_repetition"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/layout_repdist"
+            android:layout_width="95dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:padding="6dp" />
+            android:padding="1dp">
 
-        <TextView
-            android:id="@+id/xrep"
-            android:text="x"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/txt_exer_repetition"
-            android:paddingTop="9dp"
-            android:padding="5dp" />
+            <TextView
+                android:id="@+id/txt_exer_repetition"
+                android:textColor="@color/list_item_text"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:padding="4dp" />
 
-        <TextView
-            android:id="@+id/txt_exer_distance"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/xrep"
-            android:padding="6dp" />
+            <TextView
+                android:id="@+id/xrep"
+                android:textColor="@color/list_item_text"
+                android:text="x"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/txt_exer_repetition"
+                android:layout_marginTop="6dp"
+                android:padding="1dp" />
 
-        <TextView
-            android:id="@+id/txt_exer_swst"
-            android:textSize="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/txt_exer_distance"
-            android:padding="6dp"
-            android:paddingTop="15dp"
-            android:textColor="#0000FF" />
+            <TextView
+                android:id="@+id/txt_exer_distance"
+                android:textColor="@color/list_item_text"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/xrep"
+                android:paddingLeft="4dp"
+                android:paddingTop="4dp"/>
 
-        <TextView
-            android:id="@+id/txt_exer_comment"
-            android:textSize="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_exer_swst"
-            android:layout_toEndOf="@+id/txt_exer_distance"
-            android:padding="6dp" />
 
-        <TextView
-            android:id="@+id/txt_exer_id"
-            android:layout_width="wrap_content"
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_swstcom"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="6dp" />
+            android:layout_toEndOf="@id/layout_repdist">
+
+            <TextView
+                android:id="@+id/txt_exer_swst"
+                android:textColor="@color/list_item_text"
+                android:textSize="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="1dp"
+                android:paddingTop="2dp" />
+
+            <TextView
+                android:id="@+id/txt_exer_comment"
+                android:textColor="@color/list_item_text"
+                android:textSize="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_exer_swst"
+                android:paddingLeft="1dp"
+                android:paddingTop="2dp" />
+
+            <TextView
+                android:id="@+id/txt_exer_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="6dp" />
+
+        </RelativeLayout>
 
 
 

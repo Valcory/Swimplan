@@ -63,9 +63,10 @@ public class SwimmingStyleDAO extends ExerciseDBDAO{
             SwimmingStyle swimmingStyle = new SwimmingStyle("Frisim");
             SwimmingStyle swimmingStyle1 = new SwimmingStyle("Bröstsim");
             SwimmingStyle swimmingStyle2 = new SwimmingStyle("Ryggsim");
-            SwimmingStyle swimmingStyle3 = new SwimmingStyle("Crawl");
-            SwimmingStyle swimmingStyle4 = new SwimmingStyle("Spec");
-            SwimmingStyle swimmingStyle5 = new SwimmingStyle("Insim");
+            SwimmingStyle swimmingStyle3 = new SwimmingStyle("Fjäril");
+            SwimmingStyle swimmingStyle4 = new SwimmingStyle("Medley");
+            SwimmingStyle swimmingStyle5 = new SwimmingStyle("Spec");
+            SwimmingStyle swimmingStyle6 = new SwimmingStyle("Insim");
 
             List<SwimmingStyle> swimmingStyles = new ArrayList<SwimmingStyle>();
             swimmingStyles.add(swimmingStyle);
@@ -74,6 +75,7 @@ public class SwimmingStyleDAO extends ExerciseDBDAO{
             swimmingStyles.add(swimmingStyle3);
             swimmingStyles.add(swimmingStyle4);
             swimmingStyles.add(swimmingStyle5);
+            swimmingStyles.add(swimmingStyle6);
             for (SwimmingStyle swst : swimmingStyles) {
                 ContentValues values = new ContentValues();
                 values.put(DataBaseHelper.NAME_COLUMN, swst.getName());

@@ -73,15 +73,12 @@ public class ExerciseDAO extends ExerciseDBDAO {
             Exercise exercise = new Exercise();
             exercise.setId(cursor.getInt(0));
             exercise.setName(cursor.getString(1));
-            exercise.setDistance(cursor.getDouble(2));
+            exercise.setDistance(cursor.getInt(2));
             exercise.setRepetition(cursor.getInt(3));
-
             SwimmingStyle swimmingStyle = new SwimmingStyle();
             swimmingStyle.setId(cursor.getInt(4));
             swimmingStyle.setName(cursor.getString(5));
-
             exercise.setSwimmingStyle(swimmingStyle);
-
             exercises.add(exercise);
         }
         return exercises;

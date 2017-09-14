@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#3f5f74</color>
+    <!-- MATERIAL PALETTE - BLUE 700   https://material.io/color/#!/?view.left=1&view.right=0&primary.color=1976D2&primary.text.color=ffffff  -->
 
+    <color name="colorPrimary">#1976d2</color> <!-- #2196F3 -->
+    <color name="colorPrimaryDark">#004ba0</color> <!-- #1976D2 -->
+    <color name="primaryLightColor">#63a4ff</color>
+    <color name="colorAccent">#4CAF50</color> <!-- 63a4ff -->
+    <color name="primaryTextColor">#ffffff</color>
+
+
+    <color name="list_item_text">#ef000000</color>
+    <color name="list_hint_item_text">#87000000</color>
     <color name="transparent">#00000000</color>
+    <color name="main_background">#63a4ff</color>
     <color name="list_item_bg">#ffffff</color>
-    <color name="view_divider_color">#BABABA</color>
+    <color name="view_divider_color">#63a4ff</color> <!-- BABABA -->
 </resources>

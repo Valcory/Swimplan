@@ -1,16 +1,30 @@
 package se.valcory.swimplan;
 
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 import se.valcory.swimplan.db.SwimmingStyleDAO;
 import se.valcory.swimplan.fragment.CustomExerDialogFragment.CustomExerDialogFragmentListener;
@@ -23,11 +37,16 @@ public class MainActivity extends AppCompatActivity implements CustomExerDialogF
     private Fragment contentFragment;
     private ExerciseListFragment exerciseListFragment;
     private ExerciseAddFragment exerciseAddFragment;
+    public static int REQUEST_PERMISSIONS = 1;
+    boolean boolean_permission;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fn_permission();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -77,6 +96,22 @@ public class MainActivity extends AppCompatActivity implements CustomExerDialogF
                 switchContent(exerciseAddFragment, ExerciseAddFragment.ARG_ITEM_ID);
 
                 return true;
+
+            case R.id.action_share:
+                Bitmap bm = screenShot(exerciseListFragment.getView());
+                File file = saveBitmap(bm, "list_item_image.png");
+                Log.i("chase", "filepath: "+file.getAbsolutePath());
+                Uri uri = Uri.fromFile(new File(file.getAbsolutePath()));
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Simträningspass.");
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                shareIntent.setType("image/*");
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(Intent.createChooser(shareIntent, "share via"));
+
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -90,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements CustomExerDialogF
         }
         super.onSaveInstanceState(outState);
     }
-
 
     public void switchContent(Fragment fragment, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -107,6 +141,30 @@ public class MainActivity extends AppCompatActivity implements CustomExerDialogF
             transaction.commit();
             contentFragment = fragment;
         }
+    }
+
+    private Bitmap screenShot(View view) {
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
+    }
+
+    private static File saveBitmap(Bitmap bm, String fileName){
+        final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Screenshots";
+        File dir = new File(path);
+        if(!dir.exists())
+            dir.mkdirs();
+        File file = new File(dir, fileName);
+        try {
+            FileOutputStream fOut = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.PNG, 90, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
     protected void setFragmentTitle(int resourseId) {
@@ -133,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements CustomExerDialogF
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
 
-        builder.setMessage("Do You Want To Quit?");
+        builder.setMessage("Vill du stänga av appen?");
         builder.setPositiveButton(android.R.string.yes,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -148,6 +206,48 @@ public class MainActivity extends AppCompatActivity implements CustomExerDialogF
                     }
                 });
         builder.create().show();
+    }
+
+
+    private void fn_permission() {
+        if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)||
+                (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+
+            if ((ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE))) {
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_PERMISSIONS);
+
+            }
+
+            if ((ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_PERMISSIONS);
+
+            }
+        } else {
+            boolean_permission = true;
+
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSIONS) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                boolean_permission = true;
+
+
+            } else {
+                Toast.makeText(getApplicationContext(), "Please allow the permission", Toast.LENGTH_LONG).show();
+
+            }
+        }
     }
 
 
