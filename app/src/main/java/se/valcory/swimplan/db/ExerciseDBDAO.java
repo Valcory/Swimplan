@@ -1,6 +1,5 @@
 package se.valcory.swimplan.db;
 
-// Database Data Access Object
 
 import android.content.Context;
 import android.database.SQLException;

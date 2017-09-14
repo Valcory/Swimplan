@@ -12,6 +12,7 @@ package se.valcory.swimplan.fragment;
         import android.widget.ArrayAdapter;
         import android.widget.EditText;
         import android.widget.LinearLayout;
+        import android.widget.NumberPicker;
         import android.widget.Spinner;
         import android.widget.Toast;
 
@@ -25,21 +26,17 @@ package se.valcory.swimplan.fragment;
 public class CustomExerDialogFragment extends DialogFragment {
 
     // UI references
-    private EditText empNameEtxt;
-    private EditText exerDistanceEtxt;
-    private EditText exerRepetitionEtxt;
+    private EditText exerNameEtxt;
+    private NumberPicker exerRepetitionNp;
+    private NumberPicker exerDistanceNp;
     private Spinner swstSpinner;
     private LinearLayout submitLayout;
-
     private Exercise exercise;
 
     ExerciseDAO exerciseDAO;
     ArrayAdapter<SwimmingStyle> adapter;
 
     public static final String ARG_ITEM_ID = "exer_dialog_fragment";
-
-
-
 
     public interface CustomExerDialogFragmentListener {
         void onFinishDialog();
@@ -52,7 +49,6 @@ public class CustomExerDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         exerciseDAO = new ExerciseDAO(getActivity());
-
         Bundle bundle = this.getArguments();
         exercise = bundle.getParcelable("selectedExercise");
 
@@ -63,16 +59,27 @@ public class CustomExerDialogFragment extends DialogFragment {
                 null);
         builder.setView(customDialogView);
 
-        empNameEtxt = (EditText) customDialogView.findViewById(R.id.etxt_comment);
-        exerDistanceEtxt = (EditText) customDialogView
-                .findViewById(R.id.etxt_distance);
-        exerRepetitionEtxt = (EditText) customDialogView
-                .findViewById(R.id.etxt_repetition);
+        exerNameEtxt = (EditText) customDialogView.findViewById(R.id.etxt_comment);
+        exerRepetitionNp = (NumberPicker) customDialogView
+                .findViewById(R.id.np_repetition);
+        exerDistanceNp = (NumberPicker) customDialogView
+                .findViewById(R.id.np_distance);
         swstSpinner = (Spinner) customDialogView
                 .findViewById(R.id.spinner_swst);
         submitLayout = (LinearLayout) customDialogView
                 .findViewById(R.id.layout_submit);
         submitLayout.setVisibility(View.GONE);
+
+        exerRepetitionNp.setMinValue(1);
+        exerRepetitionNp.setMaxValue(20);
+        exerRepetitionNp.setWrapSelectorWheel(false);
+        final String[] distances= {"25", "50", "75", "100", "125", "150", "175", "200", "225",
+                "250", "275", "300", "325", "350", "375", "400"};
+        exerDistanceNp.setMinValue(0);
+        exerDistanceNp.setMaxValue(distances.length-1);
+        exerDistanceNp.setDisplayedValues(distances);
+        exerDistanceNp.setWrapSelectorWheel(false);
+
         setValue();
 
         builder.setTitle(R.string.update_exer);
@@ -81,11 +88,9 @@ public class CustomExerDialogFragment extends DialogFragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        exercise.setName(empNameEtxt.getText().toString());
-                        exercise.setDistance(Double.parseDouble(exerDistanceEtxt
-                                .getText().toString()));
-                        exercise.setRepetition(Integer.parseInt(exerRepetitionEtxt
-                                .getText().toString()));
+                        exercise.setName(exerNameEtxt.getText().toString());
+                        exercise.setRepetition(exerRepetitionNp.getValue());
+                        exercise.setDistance((exerDistanceNp.getValue()+1)*25);
                         SwimmingStyle swst = (SwimmingStyle) adapter
                                 .getItem(swstSpinner.getSelectedItemPosition());
                         exercise.setSwimmingStyle(swst);
@@ -115,7 +120,6 @@ public class CustomExerDialogFragment extends DialogFragment {
 
     private void setValue() {
         SwimmingStyleDAO swimmingStyleDAO = new SwimmingStyleDAO(getActivity());
-
         List<SwimmingStyle> swimmingStyles = swimmingStyleDAO.getSwimmingStyles();
         adapter = new ArrayAdapter<SwimmingStyle>(getActivity(),
                 android.R.layout.simple_list_item_1, swimmingStyles);
@@ -123,9 +127,9 @@ public class CustomExerDialogFragment extends DialogFragment {
         int pos = adapter.getPosition(exercise.getSwimmingStyle());
 
         if (exercise != null) {
-            empNameEtxt.setText(exercise.getName());
-            exerDistanceEtxt.setText(exercise.getDistance() + "");
-            exerRepetitionEtxt.setText(exercise.getRepetition() + "");
+            exerNameEtxt.setText(exercise.getName());
+            exerRepetitionNp.setValue(exercise.getRepetition());
+            exerDistanceNp.setValue((exercise.getDistance()-1)/25);
             swstSpinner.setSelection(pos);
         }
     }

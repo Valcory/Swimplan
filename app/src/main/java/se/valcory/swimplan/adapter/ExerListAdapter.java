@@ -25,11 +25,11 @@ public class ExerListAdapter extends ArrayAdapter<Exercise>{
     }
 
     private class ViewHolder {
-        TextView empIdTxt;
-        TextView empNameTxt;
+        TextView exerIdTxt;
+        TextView exerNameTxt;
         TextView exerDistanceTxt;
         TextView exerRepetitionTxt;
-        TextView empDeptNameTxt;
+        TextView exerSwstNameTxt;
     }
 
     @Override
@@ -56,15 +56,15 @@ public class ExerListAdapter extends ArrayAdapter<Exercise>{
             convertView = inflater.inflate(R.layout.list_item, null);
             holder = new ViewHolder();
 
-            holder.empIdTxt = (TextView) convertView
+            holder.exerIdTxt = (TextView) convertView
                     .findViewById(R.id.txt_exer_id);
-            holder.empNameTxt = (TextView) convertView
+            holder.exerNameTxt = (TextView) convertView
                     .findViewById(R.id.txt_exer_comment);
             holder.exerDistanceTxt = (TextView) convertView
                     .findViewById(R.id.txt_exer_distance);
             holder.exerRepetitionTxt = (TextView) convertView
                     .findViewById(R.id.txt_exer_repetition);
-            holder.empDeptNameTxt = (TextView) convertView
+            holder.exerSwstNameTxt = (TextView) convertView
                     .findViewById(R.id.txt_exer_swst);
 
             convertView.setTag(holder);
@@ -72,11 +72,11 @@ public class ExerListAdapter extends ArrayAdapter<Exercise>{
             holder = (ViewHolder) convertView.getTag();
         }
         Exercise exercise = (Exercise) getItem(position);
-        holder.empIdTxt.setText(exercise.getId() + "");
-        holder.empNameTxt.setText(exercise.getName());
+        holder.exerIdTxt.setText(exercise.getId() + "");
+        holder.exerNameTxt.setText(exercise.getName());
         holder.exerDistanceTxt.setText(exercise.getDistance() + "");
         holder.exerRepetitionTxt.setText(exercise.getRepetition() + "");
-        holder.empDeptNameTxt.setText(exercise.getSwimmingStyle().getName());
+        holder.exerSwstNameTxt.setText(exercise.getSwimmingStyle().getName());
 
         return convertView;
     }

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,16 +31,11 @@ public class ExerciseAddFragment extends Fragment implements OnClickListener {
 
     // UI references
     private EditText empNameEtxt;
-    private EditText exerDistanceEtxt;
-    private EditText exerRepetitionEtxt;
+    private NumberPicker exerRepetitionNp;
+    private NumberPicker exerDistanceNp;
     private Spinner swstSpinner;
     private Button addButton;
     private Button resetButton;
-
-
-
-
-
 
     Exercise exercise = null;
     private ExerciseDAO exerciseDAO;
@@ -60,13 +57,22 @@ public class ExerciseAddFragment extends Fragment implements OnClickListener {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_exer, container,
                 false);
-
         findViewsById(rootView);
 
         setListeners();
 
         task = new GetSwstTask(getActivity());
         task.execute((Void) null);
+
+        exerRepetitionNp.setMinValue(1);
+        exerRepetitionNp.setMaxValue(20);
+        exerRepetitionNp.setWrapSelectorWheel(false);
+        final String[] distances= {"25", "50", "75", "100", "125", "150", "175", "200", "225",
+                "250", "275", "300", "325", "350", "375", "400"};
+        exerDistanceNp.setMinValue(0);
+        exerDistanceNp.setMaxValue(distances.length-1);
+        exerDistanceNp.setDisplayedValues(distances);
+        exerDistanceNp.setWrapSelectorWheel(false);
 
         return rootView;
     }
@@ -78,8 +84,8 @@ public class ExerciseAddFragment extends Fragment implements OnClickListener {
 
     protected void resetAllFields() {
         empNameEtxt.setText("");
-        exerDistanceEtxt.setText("");
-        exerRepetitionEtxt.setText("");
+        exerRepetitionNp.setValue(1);
+        exerDistanceNp.setValue(0);
         if (swstSpinner.getAdapter().getCount() > 0)
             swstSpinner.setSelection(0);
     }
@@ -87,10 +93,8 @@ public class ExerciseAddFragment extends Fragment implements OnClickListener {
     private void setExercise() {
         exercise = new Exercise();
         exercise.setName(empNameEtxt.getText().toString());
-        exercise.setDistance(Double.parseDouble(exerDistanceEtxt.getText()
-                .toString()));
-        exercise.setRepetition(Integer.parseInt(exerRepetitionEtxt.getText()
-                .toString()));
+        exercise.setRepetition(Integer.valueOf(exerRepetitionNp.getValue()));
+        exercise.setDistance(Integer.valueOf((exerDistanceNp.getValue()+1)*25));
         SwimmingStyle selectedSwst = (SwimmingStyle) swstSpinner.getSelectedItem();
         exercise.setSwimmingStyle(selectedSwst);
     }
@@ -99,13 +103,15 @@ public class ExerciseAddFragment extends Fragment implements OnClickListener {
     public void onResume() {
         //getActivity().setTitle(R.string.add_exer);
         //getActivity().getActionBar().setTitle(R.string.add_exer);
+
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         super.onResume();
     }
 
     private void findViewsById(View rootView) {
         empNameEtxt = (EditText) rootView.findViewById(R.id.etxt_comment);
-        exerDistanceEtxt = (EditText) rootView.findViewById(R.id.etxt_distance);
-        exerRepetitionEtxt = (EditText) rootView.findViewById(R.id.etxt_repetition);
+        exerRepetitionNp = (NumberPicker) rootView.findViewById(R.id.np_repetition);
+        exerDistanceNp = (NumberPicker) rootView.findViewById(R.id.np_distance);
         swstSpinner = (Spinner) rootView.findViewById(R.id.spinner_swst);
         addButton = (Button) rootView.findViewById(R.id.button_add);
         resetButton = (Button) rootView.findViewById(R.id.button_reset);
@@ -172,7 +178,7 @@ public class ExerciseAddFragment extends Fragment implements OnClickListener {
                     && !activityWeakRef.get().isFinishing()) {
                 if (result != -1)
                     Toast.makeText(activityWeakRef.get(), "Övning sparad",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
             }
         }
     }
