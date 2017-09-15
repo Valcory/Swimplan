@@ -4,9 +4,11 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,8 +115,7 @@ public class ExerciseListFragment extends Fragment implements OnItemClickListene
                                 exerList);
                         exerciseListView.setAdapter(exerciseListAdapter);
                     } else {
-                        Toast.makeText(activity, "Inga övningar funna",
-                                Toast.LENGTH_LONG).show();
+                        alertView("Du kan lägga till övningar via menyn uppe till höger.");
                     }
                 }
             }
@@ -127,6 +128,17 @@ public class ExerciseListFragment extends Fragment implements OnItemClickListene
         task.execute((Void) null);
     }
 
+    private void alertView( String message ) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+
+        dialog.setTitle( "Välkommen till Swimplan!" )
+                .setMessage(message)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialoginterface, int i) {
+                    }
+                }).show();
+
+    }
     @Override
     public void onResume() {
         //Fixar set title efter onResume. De under ger null pointer exception.
